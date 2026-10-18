@@ -1,32 +1,65 @@
-# DTL-5G Code Sample
+# DTL-5G Focused Code Sample
 
-This folder contains a focused subset of code that I implemented for my research on deep transfer learning for DDoS detection in 5G and beyond networks.
+This repository contains three notebooks implementing a compact source-to-target
+deep transfer learning workflow for DDoS detection in 5G network traffic.
 
-The notebooks illustrate the main experimental pipeline:
+## Notebooks
 
-1. Source-domain BiLSTM model training
-2. Target-domain baseline evaluation using the 5G-NIDD dataset
-3. DTL1 transfer learning through selective layer freezing and fine-tuning
+### 1. `01_BiLSTM_Source_Pretraining.ipynb`
+- loads source-domain traffic from two network slices
+- balances benign and attack traffic
+- trains the source BiLSTM
+- saves `artifacts/BiLSTM_VM_Obj1_1.keras`
 
-## My Contribution
+### 2. `02_BiLSTM_Target_Baseline.ipynb`
+- loads and balances 5G-NIDD
+- trains the same BiLSTM architecture from scratch
+- provides the no-transfer target baseline
 
-I implemented the experimental workflow, including data preprocessing, model construction and training, transfer-learning configurations, evaluation, and performance analysis used in these notebooks.
+### 3. `03_DTL1_BiLSTM_TransferLearning.ipynb`
+- loads the source checkpoint
+- freezes the first 6 of 9 layers
+- fine-tunes the final 3 layers on 5G-NIDD
 
-## Associated Publication
+## Experimental configuration
 
-Farzaneh, Behnam, Nashid Shahriar, Abu Hena Al Muktadir, Md Shamim Towhid, and Mohammad Sadegh Khosravani. "DTL-5G: Deep transfer learning-based DDoS attack detection in 5G and beyond networks." Computer Communications 228 (2024): 107927.
+- 8 selected traffic features
+- 80/20 stratified train/test split
+- StandardScaler fitted only on the training partition
+- Objective-1 seeds: `42, 142, 12, 4, 80`
+- 9-layer BiLSTM
+- 99,970 total parameters
+- L2 regularization = 0.001
+- dropout = 0.5
+- Adam learning rate = 1e-5
+- maximum 200 epochs with early stopping
+- attack is the positive class for recall, precision, F1, and ROC-AUC
+- deterministic TensorFlow operations requested where supported
+- explicit checks for duplicate filenames and non-finite selected-feature values
 
-## Files
+## Focused sample
 
-- `01_BiLSTM_Source_Pretraining.ipynb`  
-  Trains the BiLSTM model on the source-domain 5G network-slicing dataset.
+The notebooks are configured for Objective-1 iteration 1 (`random_state=42`).
+The complete experiment can be repeated with all five fixed seeds and the metrics
+aggregated across runs.
 
-- `02_BiLSTM_Target_Baseline.ipynb`  
-  Trains and evaluates the same architecture directly on the 5G-NIDD target dataset without transfer learning.
+Notebook 3 uses the checkpoint produced by Notebook 1 by default. Set
+`DTL5G_SOURCE_MODEL` to use another source checkpoint.
 
-- `03_BiLSTM_DTL1_TransferLearning.ipynb`  
-  Applies the DTL1 fine-tuning strategy by freezing part of the pretrained model and retraining the remaining layers on 5G-NIDD.
+## Data paths
 
-## Notes
+The datasets are not included.
 
-The datasets are not included in this code sample. Dataset paths in the original experimental notebooks may need to be adjusted before execution.
+Set:
+
+- `DTL5G_SOURCE_DATA_ROOT` to the source VM dataset directory
+- `NIDD_DATA_ROOT` to the 5G-NIDD dataset directory
+- optionally `DTL5G_SOURCE_MODEL` to another source checkpoint
+
+## Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the notebooks in numerical order.
