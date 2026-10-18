@@ -108,3 +108,6 @@ Run the notebooks in numerical order.
 
 BibTeX entries for the dataset and related publications are available in
 [`CITATION.bib`](CITATION.bib).
+
+## Acknowledgement
+This work was supported in part by funding from the Innovation for Defence Excellence and Security (IDEaS) program from the Department of National Defence (DND).
