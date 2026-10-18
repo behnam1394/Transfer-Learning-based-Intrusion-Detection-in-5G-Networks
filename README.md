@@ -19,7 +19,7 @@ IEEE DataPort record and configure `DTL5G_SOURCE_DATA_ROOT` before running Noteb
 Additional dataset details and the recommended citation are provided in
 [`DATASET.md`](DATASET.md).
 
-## Related publications
+## Related publications and thesis
 
 This repository accompanies the 5G network-slicing and deep-transfer-learning research
 developed through the following publications:
@@ -38,6 +38,10 @@ developed through the following publications:
    “SliceSecure: Impact and Detection of DoS/DDoS Attacks on 5G Network Slices,”  
    *2022 IEEE Future Networks World Forum (FNWF)*, pp. 639–642, 2022.  
    DOI: [10.1109/FNWF55208.2022.00117](https://doi.org/10.1109/FNWF55208.2022.00117)
+
+4. **B. Farzaneh**,  
+   “Deep Transfer Learning-Based DDoS Attack Detection in 5G and Beyond Networks,”  
+   M.Sc. thesis, Department of Computer Science, University of Regina, Regina, Saskatchewan, Canada, 2024.
 
 ## Notebooks
 
