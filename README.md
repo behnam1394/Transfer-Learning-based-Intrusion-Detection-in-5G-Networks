@@ -45,7 +45,7 @@ developed through the following publications:
 - loads source-domain traffic from two network slices
 - balances benign and attack traffic
 - trains the source BiLSTM
-- saves `artifacts/BiLSTM_VM_Obj1_1.keras`
+- saves `models/BiLSTM_VM_Obj1_1.keras`
 
 ### 2. `02_BiLSTM_Target_Baseline.ipynb`
 - loads and balances 5G-NIDD
